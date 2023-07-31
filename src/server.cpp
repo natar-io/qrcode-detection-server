@@ -201,7 +201,7 @@ std::string process(Image* image, zbar::ImageScanner* scanner) {
     // TODO: Skip opencv and create rgb_to_gray function to convert image->data() without needing to create 2 extras images
     Mat imageCv, gray;
     imageCv = Mat(image->height(), image->width(), CV_8UC3, image->data());
-    cvtColor(imageCv, gray, CV_RGB2GRAY);
+    cvtColor(imageCv, gray, cv::COLOR_RGB2GRAY);
     zbar::Image zbarImage (gray.cols, gray.rows, "Y800", gray.data, gray.cols * gray.rows);
     scanner->scan(zbarImage);
 
@@ -278,7 +278,7 @@ void onImagePublished(redisAsyncContext* c, void* rep, void* privdata) {
 }
 
 int main(int argc, char** argv) {
-    cxxopts::Options options("aruco-detection-server", "Aruco markers detection server.");
+    cxxopts::Options options("qrcode-server", "QRcode markers detection server.");
     options.add_options()
             ("redis-port", "The port to which the redis client should try to connect.", cxxopts::value<int>())
             ("redis-host", "The host adress to which the redis client should try to connect", cxxopts::value<std::string>())
